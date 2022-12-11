@@ -47,9 +47,10 @@ public class KeycloakServiceImpl implements KeycloakService {
 
 
         Keycloak keycloak = getKeycloakInstance();  // if want to do anything from Spring in keycloack, we should open an instance
+                                                    // this object will hold all the info of the client
 
         RealmResource realmResource = keycloak.realm(keycloakProperties.getRealm());
-        UsersResource usersResource = realmResource.users();
+        UsersResource usersResource = realmResource.users();  // this class is used to create the user
 
         // Create Keycloak user
         Response result = usersResource.create(keycloakUser);
@@ -57,14 +58,13 @@ public class KeycloakServiceImpl implements KeycloakService {
 
         String userId = getCreatedId(result);
         ClientRepresentation appClient = realmResource.clients()
-                .findByClientId(keycloakProperties.getClientId()).get(0);
+                .findByClientId(keycloakProperties.getClientId()).get(0);   // need to find which client working with
 
-        RoleRepresentation userClientRole = realmResource.clients().get(appClient.getId()) //
-                .roles().get(userDTO.getRole().getDescription()).toRepresentation();
-
+        RoleRepresentation userClientRole = realmResource.clients().get(appClient.getId()) // get the roles inside that client
+                .roles().get(userDTO.getRole().getDescription()).toRepresentation();  // toRepresentation method will change the role to RoleRepresentation
+                                                                   // because when we assign role to the user in keycloak, need to use RoleRepresentation
         realmResource.users().get(userId).roles().clientLevel(appClient.getId())
                 .add(List.of(userClientRole));
-
 
         keycloak.close();
         return result;

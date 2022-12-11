@@ -25,7 +25,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {  // c
         super.configure(http);
         http.authorizeRequests()
                 .anyRequest()
-                .permitAll();
+                .permitAll();  // able to accept all request to my app
         http.csrf().disable();
     }
     @Autowired
@@ -33,7 +33,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {  // c
         KeycloakAuthenticationProvider keycloakAuthenticationProvider =
                 keycloakAuthenticationProvider();
         keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(
-                new SimpleAuthorityMapper());
+                new SimpleAuthorityMapper());   // by using th GrantedAuthoritiesMapper Keycloak is able to resolve the roles that our users have, and authorize/authenticate the user
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
     @Bean
@@ -46,5 +46,5 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {  // c
     @Bean
     public KeycloakConfigResolver KeycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
-    }
+    }  // do authorization
 }
