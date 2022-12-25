@@ -33,6 +33,7 @@ public class UserController {
     public ResponseEntity<ResponseWrapper> getUsers(){  // see custom output using ResponseWrapper
         List<UserDTO> userDTOList = userService.listAllUsers();
         return ResponseEntity.ok(new ResponseWrapper("Users are successfully retrieved", userDTOList, HttpStatus.OK));
+                            //this status is what we see in postman.                                           this status is what we see in Json body
     }
 
     @ExecutionTime
