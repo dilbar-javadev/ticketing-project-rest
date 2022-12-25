@@ -100,9 +100,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
-        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();  // find the username from the Token
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();  // is getting info from spring boot, who is logging in?
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();  // with this keycloak connection it is going to the token
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();  // find the username from the Token, then we pass the username to our method
 
         UserDTO currentUserDTO = userService.findByUserName(username);
 

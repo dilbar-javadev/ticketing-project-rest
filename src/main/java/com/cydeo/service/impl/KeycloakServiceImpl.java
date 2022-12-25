@@ -29,13 +29,14 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override   // override the keycloakService
-    public Response userCreate(UserDTO userDTO) {
+    public Response userCreate(UserDTO userDTO) {   // this is the service that is going to create user in keycloak
 
         CredentialRepresentation credential = new CredentialRepresentation();
         credential.setType(CredentialRepresentation.PASSWORD);
         credential.setTemporary(false);  // if it is true, password need to be reset
         credential.setValue(userDTO.getPassWord());
 
+        // this part is same as user create page in keycloak
         UserRepresentation keycloakUser = new UserRepresentation();
         keycloakUser.setUsername(userDTO.getUserName());
         keycloakUser.setFirstName(userDTO.getFirstName());
@@ -46,7 +47,7 @@ public class KeycloakServiceImpl implements KeycloakService {
         keycloakUser.setEnabled(true);
 
 
-        Keycloak keycloak = getKeycloakInstance();  // if want to do anything from Spring in keycloack, we should open an instance
+        Keycloak keycloak = getKeycloakInstance();  // if want to do anything from Spring in keycloak, we should open an instance
                                                     // this object will hold all the info of the client
 
         RealmResource realmResource = keycloak.realm(keycloakProperties.getRealm());

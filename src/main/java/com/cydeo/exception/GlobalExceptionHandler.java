@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler {  // whenever exception happens, this class will be executed
 
     @ExceptionHandler(TicketingProjectException.class)   // whenever exception happens belongs to this class (TicketingProjectException.class), execute this method
     public ResponseEntity<ResponseWrapper> serviceException(TicketingProjectException se){
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResponseWrapper.builder().success(false).code(HttpStatus.FORBIDDEN.value()).message(message).build(),HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class, BadCredentialsException.class})  // if any exception happens that belongs to any of there three classes
+    @ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class, BadCredentialsException.class})  // if any exception happens that belongs to any of there three classes, execute this class
     public ResponseEntity<ResponseWrapper> genericException(Throwable e, HandlerMethod handlerMethod) {
 
         Optional<DefaultExceptionMessageDto> defaultMessage = getMessageFromAnnotation(handlerMethod.getMethod());
