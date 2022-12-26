@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {  // whenever exception happens, this class
     public ResponseEntity<ResponseWrapper> genericException(Throwable e, HandlerMethod handlerMethod) {
 
         Optional<DefaultExceptionMessageDto> defaultMessage = getMessageFromAnnotation(handlerMethod.getMethod());
-        if (defaultMessage.isPresent() && !ObjectUtils.isEmpty(defaultMessage.get().getMessage())) {
+        if (defaultMessage.isPresent() && !ObjectUtils.isEmpty(defaultMessage.get().getMessage())) {  // if the method is annotated with my default annotation, it will build the following and show the message
             ResponseWrapper response = ResponseWrapper
                     .builder()
                     .success(false)
@@ -45,6 +45,7 @@ public class GlobalExceptionHandler {  // whenever exception happens, this class
                     .build();
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        // if exception happen and method not annotated, it will throw following message
         return new ResponseEntity<>(ResponseWrapper.builder().success(false).message("Action failed: An error occurred!").code(HttpStatus.INTERNAL_SERVER_ERROR.value()).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     private Optional<DefaultExceptionMessageDto> getMessageFromAnnotation(Method method) {
