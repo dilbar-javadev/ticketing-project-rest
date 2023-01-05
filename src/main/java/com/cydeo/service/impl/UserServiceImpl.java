@@ -96,6 +96,7 @@ public class UserServiceImpl implements UserService {
             throw new TicketingProjectException("User can not be deleted");
         }
 
+        keycloakService.delete(username);
     }
 
     @Override
