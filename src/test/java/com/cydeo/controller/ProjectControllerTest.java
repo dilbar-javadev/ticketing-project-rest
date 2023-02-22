@@ -42,9 +42,9 @@ class ProjectControllerTest {
     @BeforeAll
     static void setUp() {
 
-        token = "Bearer " + "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlR0JBd1phNW1KNC1sSEtpenVod3NBd1h0R0pSeVNyRFVSUmd5YnAtb3dVIn0.eyJleHAiOjE2NzE0MDk2MzksImlhdCI6MTY3MTM5MTYzOSwianRpIjoiOWFjMzcxNDgtMDUxNS00MjM2LTgwYzAtZDIxZTA1OTFhYzgwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2N5ZGVvLWRldiIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJhYTcwNTQ5NC1kYzgxLTQwODItYTFlOC01YmIwY2QxNjM3ZDciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ0aWNrZXRpbmctYXBwIiwic2Vzc2lvbl9zdGF0ZSI6IjU0ZDI2Mzk1LTE4OTYtNDQ3ZS05NTg4LTVjZTEzYWFjMmQzMCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1jeWRlby1kZXYiXX0sInJlc291cmNlX2FjY2VzcyI6eyJ0aWNrZXRpbmctYXBwIjp7InJvbGVzIjpbIk1hbmFnZXIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI1NGQyNjM5NS0xODk2LTQ0N2UtOTU4OC01Y2UxM2FhYzJkMzAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoib3p6eSJ9.QUkiZsGzJ9boq5_gXidQaW9HqbIBPzEKHgkmeVxsu1hAN-MRcA5vGcMV0fl4lnHUg2uC8WTKeo2U66FghD48JwhYPLO-kSQmE7ImPsFd9ilMe5JHQEP1LibU-YcgqNUbKjvNH_JR467M5RPSpoWnJFNweaSz3uvsOiGmQpLqhmYt7o6V89mnjg_oDYw5hPL1o-ikj4uABsyugX0j-Qs18fOW1pn6gubZknay86DSYQAs9dvL_wl5D0supWuidSxP87armnvaB4VupbEeDUNN-eIogEob84Eub_nMygnrF5zti_hMV6Ey9ANdPJW1DjRCqUsMFbWu_LLeZMir7qlm6Q";
+        token = "Bearer " + getToken();
 
-        manager = new UserDTO(2L,
+        manager = new UserDTO(2L,   // These are sample sata
                 "",
                 "",
                 "ozzy",
@@ -135,7 +135,7 @@ class ProjectControllerTest {
 
         map.add("grant_type", "password");
         map.add("client_id", "ticketing-app");
-        map.add("client_secret", "lSl4zDKD16GJtJeLFUfdWqX5fU8FVo0R");
+        map.add("client_secret", "hFfn9aqQ0hbmwuYPVynwqFG4aOuzvuTO");
         map.add("username", "ozzy");
         map.add("password", "abc1");
         map.add("scope", "openid");

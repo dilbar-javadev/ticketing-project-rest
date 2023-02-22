@@ -13,9 +13,11 @@ import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,18 +28,21 @@ public class UserServiceImpl implements UserService {
     private final ProjectService projectService;
     private final TaskService taskService;
     private final KeycloakService keycloakService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, @Lazy TaskService taskService, KeycloakService keycloakService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, @Lazy TaskService taskService, KeycloakService keycloakService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.projectService = projectService;
         this.taskService = taskService;
         this.keycloakService = keycloakService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDTO findByUserName(String username) {
         User user = userRepository.findByUserNameAndIsDeleted(username, false);
+        if(user == null) throw new NoSuchElementException("User not found");
         return userMapper.convertToDto(user);
     }
 
@@ -48,15 +53,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDTO user) {
+    public UserDTO save(UserDTO user) {
 
         user.setEnabled(true);
 
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+
         User obj = userMapper.convertToEntity(user);
 
-        userRepository.save(obj);
+        User savedUser = userRepository.save(obj);
 
         keycloakService.userCreate(user);
+
+        return userMapper.convertToDto(savedUser);
 
     }
 
@@ -71,6 +80,7 @@ public class UserServiceImpl implements UserService {
 
         //Find current user
         User user1 = userRepository.findByUserNameAndIsDeleted(user.getUserName(), false);  //has id
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
         //Map update user dto to entity object
         User convertedUser = userMapper.convertToEntity(user);   // has id?
         //set id to the converted object
